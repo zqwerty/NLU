@@ -544,7 +544,7 @@ turn['text'] = ' '.join([token.text for token in doc]).strip()
 
 #### Span info
 
-For slots of **Inform, Select, Recommend, Book, OfferBook, NoBook, NoOffer** dialog act that have non-binary value, use rule to annotate the value occurrence. 
+For slots of **Inform, Select, Recommend, Book, OfferBook, NoBook, NoOffer** dialog act that have non-binary value, use rule to annotate the value occurrence. Cover 98.86% of these slots.
 
 - Exactly match
 - Digit alias ("one" for 1)
@@ -555,10 +555,7 @@ For slots of **Inform, Select, Recommend, Book, OfferBook, NoBook, NoOffer** dia
 
 
 
-The slots without span annotation:
 
-- Wrong dialog act annotation
-- Alias
 
 
 

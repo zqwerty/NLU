@@ -461,7 +461,6 @@ def annotate_user_da(data):
 def annotate_sys_da(data, database):
     print('Begin system da annotation:')
     print('=' * 50)
-    # TODO: police and hospital
     police_val2slot = {
         "Parkside Police Station": "name",
         "Parkside , Cambridge": "address",
@@ -541,8 +540,12 @@ def annotate_sys_da(data, database):
             for da, svs in das.items():
                 for j, (s, v) in enumerate(svs):
                     if s == 'Ref':
-                        assert svs[j][1] == v
-                        svs[j][1] = ''.join(v.split())
+                        real_v = ''.join(v.split())
+                        if v in session['log'][i]['text']:
+                            session['log'][i]['text'] = session['log'][i]['text'].replace(v, real_v)
+                        if real_v+'.' in session['log'][i]['text']:
+                            session['log'][i]['text'] = session['log'][i]['text'].replace(real_v+'.', real_v+' .')
+                        svs[j][1] = real_v
     print('=' * 50)
     print('End system da annotation')
 
@@ -662,9 +665,6 @@ if __name__ == '__main__':
     print('dataset size: %d' % len(all_data))
     tokenize(all_data,process_text=True,process_da=True)
     annotate_user_da(all_data)
-    # tokenize(all_data,process_text=False,process_da=True)
-    # json.dump(all_data, open('annotated_user_da_full.json', 'w'), indent=4)
-    # all_data = json.load(open('annotated_user_da_full.json'))
     annotate_sys_da(all_data, database)
     tokenize(all_data, process_text=False, process_da=True)
     annotate_span(all_data)

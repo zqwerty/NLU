@@ -2,7 +2,7 @@ import os
 import json
 import zipfile
 
-archive = zipfile.ZipFile('annotation/annotated_user_da_with_span_full.zip', 'r')
+archive = zipfile.ZipFile('annotation/annotated_user_da_with_span_full.json.zip', 'r')
 dataset = json.load(archive.open('annotated_user_da_with_span_full.json'))
 train_list = set(line.strip() for line in open('trainListFile').readlines())
 val_list = set(line.strip() for line in open('valListFile').readlines())

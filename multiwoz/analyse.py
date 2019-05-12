@@ -37,11 +37,18 @@ def da_analyse(das_list, span_list):
             da_slot_span.append((da,s))
     da_slot = dict(Counter(da_slot))
     da_slot_span = dict(Counter(da_slot_span))
-    pprint.pprint(len(da_slot))
-    pprint.pprint(len(da_slot_span))
+    print('all slot num:',len(da_slot))
+    print('have span num:',len(da_slot_span))
+    span_numerator, span_denominator = 0,0
+    rate = []
     for k in da_slot:
         if k in da_slot_span:
             print(k, da_slot_span[k]/da_slot[k], da_slot[k], da_slot_span[k])
+            rate.append(da_slot_span[k]/da_slot[k])
+            span_numerator += da_slot_span[k]
+            span_denominator += da_slot[k]
+    print('span annotation rate:', span_numerator/span_denominator)
+    print(np.min(rate))
 
 def get_stats(utts,das):
     intent = []
