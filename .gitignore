@@ -4,3 +4,6 @@ multiwoz/annotation/annotated_user_da_with_span_full.json
 multiwoz/test.json.zip
 multiwoz/train.json.zip
 multiwoz/val.json.zip
+multiwoz/test.json
+multiwoz/train.json
+multiwoz/val.json

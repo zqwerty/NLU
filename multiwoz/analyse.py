@@ -4,6 +4,7 @@ import zipfile
 from collections import Counter
 import matplotlib.pyplot as plt
 import numpy as np
+import pprint
 
 
 def load_data():
@@ -16,14 +17,31 @@ def load_data():
 
 
 def read_da(data):
-    utts, das, span = [], [], []
+    utts, das_list, span_list = [], [], []
     for id, sess in data.items():
         for turn in sess:
             utts.append(turn['text'])
-            das.append(turn['dialog_act'])
-            span.append(turn['span_info'])
-    return utts, das, span
+            das_list.append(turn['dialog_act'])
+            span_list.append(turn['span_info'])
+    return utts, das_list, span_list
 
+
+def da_analyse(das_list, span_list):
+    da_slot = []
+    da_slot_span = []
+    for das, span in zip(das_list, span_list):
+        for da, svs in das.items():
+            for s,v in svs:
+                da_slot.append((da,s))
+        for da, s, v, start, end in span:
+            da_slot_span.append((da,s))
+    da_slot = dict(Counter(da_slot))
+    da_slot_span = dict(Counter(da_slot_span))
+    pprint.pprint(len(da_slot))
+    pprint.pprint(len(da_slot_span))
+    for k in da_slot:
+        if k in da_slot_span:
+            print(k, da_slot_span[k]/da_slot[k], da_slot[k], da_slot_span[k])
 
 def get_stats(utts,das):
     intent = []
@@ -60,5 +78,5 @@ def get_stats(utts,das):
 
 if __name__ == '__main__':
     dataset = load_data()
-    utts, das, span = read_da(dataset['train'])
-
+    utts, das_list, span_list = read_da(dataset['train'])
+    da_analyse(das_list, span_list)
